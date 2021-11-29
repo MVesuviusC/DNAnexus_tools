@@ -1,0 +1,30 @@
+{ "name": "md5app",
+  "runSpec": {
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "interpreter": "bash",
+    "file": "md5.sh"
+  },
+  "inputSpec": [
+    {
+      "name": "input",
+      "label": "Input files",
+      "class": "array:file",
+      "patterns": ["*"]
+    },
+    {
+        "name": "outname",
+        "label": "Output file name",
+        "class": "string",
+        "optional": false
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "outdir",
+      "class": "array:file",
+      "patterns": ["*"]
+    }
+  ]
+}

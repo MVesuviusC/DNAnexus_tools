@@ -1,0 +1,31 @@
+{ "name": "splitapp",
+  "runSpec": {
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "interpreter": "bash",
+    "file": "split.sh",
+    "execDepends": [ {"name": "parallel"} ]
+  },
+  "inputSpec": [
+    {
+      "name": "input",
+      "label": "Split files",
+      "class": "array:file",
+      "patterns": ["*.bam"]
+    },
+    {
+        "name": "splitSize",
+        "label": "Split file size",
+        "class": "string",
+        "optional": false
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "splitOut",
+      "class": "array:file",
+      "patterns": ["*"]
+    }
+  ]
+}
