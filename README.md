@@ -39,10 +39,6 @@ I used the splitapp (above) to split the large files into 1Gb pieces and then do
 
 I then ran `prepDownloadFile.pl` to generate a file I could use with `dnaNexusDl.pl` to automatically retry the downloads. The first script just matches up the download link to the md5sums and the second script takes the matching md5sum and link and retries the download until it works and checks the md5sum.
 
-My cluster uses slurm, so I wrote a sbatch file (`forceDownload.sh`) to automate this for me. To use this, change:
-
--   `--array=0-xx` argument so that `xx` is equal to the number of links minus 1
--   `--account=accountHere` to include your account or delete this line if you don't need it
 
 ```
 # Match up md5sums and links
@@ -50,8 +46,6 @@ perl prepDownloadFile.pl \
   --linkFile DNAnexus_export_urls-20210930-084226.txt \
   --md5File allMd5.txt \
     > downloadFile.txt
-
-# Either:
 
 ### loop over all links and download each in turn
 for i in $(seq 1 $(wc -l downloadFile.txt | cut -d " " -f 1))
@@ -65,9 +59,16 @@ do
         --link ${currentLink} \
         --md5 ${currentMd5}
 done
+```
 
-# or
+My cluster uses slurm, so I wrote a sbatch file (`forceDownload.sh`) to automate this for me. To use this, change:
 
+-   `--array=0-xx` argument so that `xx` is equal to the number of links minus 1
+-   `--account=accountHere` to include your account or delete this line if you don't need it
+
+Then run the shell script. This script will look for downloadFile.txt and download several at once to the current working directory.
+
+```
 ### Or download a bunch at once using slurm
 sbatch forceDownload.sh
 ```
